@@ -1,4 +1,28 @@
 dati grezzi → dati puliti → rendimenti → stime → decisione → valutazione
+Quindi definire quali sono gli elementi che vogliamo inserire
+Probabilmente definire un paniere di titoli interessanti, magari in settori considerabili "nobili potrebbe essere una buona idea.
+Io pensavo ad un paniere di titoli del settore agricolo, per la produzione alimentare, ecc...
+Applicare la teoria finanziaria a queste tipologie di titoli, e vedere magari come questi si possono inserire all'interno di un portafoglio d'investimento piuttosto complesso, come quello che può essere se composto da titoli privi di rischio e altro.
+Confrontare magari diverse tipologie di portafogli, basate se diverse tipologie di 
+avversione al rischio. Se non sbaglio erano 7 effettivamente i livelli di investimento che si possono 
+prevedere, e si potrebbe fare un'analisi di tutti questi costruendo diverse tipologie di portafogli ottimi. 
+
+Evidenziare diverse tipologie di indici che possano spiegare o meno l'andamento e la performance del
+portafoglio rispetto agli altri e ai titoli dei vari soggetti, anche presi singolarmente. 
+
+Evitare di riscaricare e di "tenere in memoria" molti dati secondo me è un punto fondamentale, magari tenere solo medie o indicatori di dati passati (anche se rilevanti) può alleggerrire il tutto
+
+Tenere a mente una buona organizzazione del flusso di lavoro per risparmiare tempo 
+
+# Librerie: poche ma giuste
+Per una prima versione ben difendibile, io terrei un set essenziale:
+- pandas per tabelle e serie temporali
+- numpy per calcoli numerici
+- una fonte dati semplice come Yahoo Finance o CSV locali
+- matplotlib per grafici
+- opzionalmente PyPortfolioOpt per confrontare i tuoi risultati con una libreria già strutturata
+
+
 
 # Architettura del progetto: portfolio quantitativo in Python
 
