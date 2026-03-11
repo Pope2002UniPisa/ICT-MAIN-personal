@@ -127,4 +127,14 @@ Il progetto deve essere:
 - facile da spiegare all'esame
 - estendibile in futuro
 
+## Nel tuo caso, visto che vuoi capire davvero quello che fai e non complicarti la vita inutilmente, io farei una distinzione molto chiara tra:
+- architettura finale ideale
+- architettura minima realistica da implementare adesso
+- E questa è la cosa più importante da fissare
 
+
+https://pyportfolioopt.readthedocs.io/en/latest/ExpectedReturns.html
+https://packaging.python.org/en/latest/tutorials/packaging-projects/?utm=
+https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/?utm=
+https://docs.pytest.org/en/stable/explanation/goodpractices.html?utm=
+https://pandas-datareader.readthedocs.io/en/latest/remote_data.html
