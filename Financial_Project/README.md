@@ -133,7 +133,7 @@ Il progetto deve essere:
 - E questa è la cosa più importante da fissare
 
 # Per il momento mi risperbo di fare questa struttura, poi vediamo:
-'''text
+```text
 project/
 │
 ├── data/
@@ -151,7 +151,7 @@ project/
 ├── main.py
 ├── requirements.txt
 └── README.md
-'''
+```
 
 
 https://pyportfolioopt.readthedocs.io/en/latest/ExpectedReturns.html
