@@ -1,0 +1,18 @@
+project/
+│
+├── data/
+├── src/
+│   ├── data_loader.py
+│   ├── preprocessing.py
+│   ├── indicators.py
+│   ├── portfolio.py
+│   ├── strategies.py
+│   ├── visualization.py
+│   └── app.py
+│
+├── notebooks/
+│   └── exploratory_analysis.ipynb
+│
+├── main.py
+├── requirements.txt
+└── README.md
