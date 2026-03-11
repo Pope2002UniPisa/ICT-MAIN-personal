@@ -1,1 +1,0 @@
-# misura cosa è successo: rendimento, rischio, drawdown, Sharpe

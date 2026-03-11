@@ -41,7 +41,7 @@ Costruire un progetto Python ben organizzato, veloce da eseguire e facile da spi
 4. Rendere ogni modulo testabile da solo.
 5. Partire semplice e poi aggiungere complessità.
 
-## Struttura logica
+## Struttura logica (TROPPO DISPERSIVA?)
 
 ```text
 project/
@@ -132,9 +132,34 @@ Il progetto deve essere:
 - architettura minima realistica da implementare adesso
 - E questa è la cosa più importante da fissare
 
+# Per il momento mi risperbo di fare questa struttura, poi vediamo:
+'''text
+project/
+│
+├── data/
+│   ├── raw/
+│   └── processed/
+├── notebooks/
+│   └── exploratory_analysis.ipynb
+├── src/
+│   ├── data_loader.py
+│   ├── preprocessing.py
+│   ├── portfolio.py
+│   ├── backtest.py
+│   ├── visualization.py
+│   └── app.py
+├── main.py
+├── requirements.txt
+└── README.md
+'''
+
 
 https://pyportfolioopt.readthedocs.io/en/latest/ExpectedReturns.html
+
 https://packaging.python.org/en/latest/tutorials/packaging-projects/?utm=
+
 https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/?utm=
+
 https://docs.pytest.org/en/stable/explanation/goodpractices.html?utm=
+
 https://pandas-datareader.readthedocs.io/en/latest/remote_data.html

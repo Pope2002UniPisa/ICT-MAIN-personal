@@ -3,20 +3,15 @@ project/
 ├── data/
 │   ├── raw/
 │   └── processed/
+├── notebooks/
+│   └── exploratory_analysis.ipynb
 ├── src/
 │   ├── data_loader.py
 │   ├── preprocessing.py
-│   ├── indicators.py
 │   ├── portfolio.py
-│   ├── strategies.py
+│   ├── backtest.py
 │   ├── visualization.py
 │   └── app.py
-│
-├── notebooks/
-│   └── exploratory_analysis.ipynb
-│
 ├── main.py
 ├── requirements.txt
 └── README.md
-
-
