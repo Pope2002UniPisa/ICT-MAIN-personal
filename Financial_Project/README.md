@@ -152,7 +152,16 @@ project/
 ├── requirements.txt
 └── README.md
 ```
+### Ruolo di ciascun file:
+- data_loader.py: scarica o legge i prezzi
+- preprocessing.py: pulisce dati, allinea date, calcola returns base
+- portfolio.py: calcola pesi, metriche, portafogli confronto
+- backtest.py: simula andamento dei portafogli nel tempo
+- visualization.py: fa i grafici
+- app.py: coordina il flusso
+- main.py: avvia tutto
 
+## Separazione dei grafici dai calcoli, non mischiare quindi matematica e presentazione
 
 
 https://pyportfolioopt.readthedocs.io/en/latest/ExpectedReturns.html
@@ -164,3 +173,119 @@ https://packaging.python.org/en/latest/discussions/src-layout-vs-flat-layout/?ut
 https://docs.pytest.org/en/stable/explanation/goodpractices.html?utm=
 
 https://pandas-datareader.readthedocs.io/en/latest/remote_data.html
+
+## Roadmap di sviluppo del progetto
+
+Per evitare di scrivere codice in modo disordinato e poco controllabile, il progetto viene sviluppato seguendo una sequenza logica precisa.  
+Ogni fase serve a chiarire un aspetto fondamentale prima di passare alla successiva.
+
+### Fase 1: definire con precisione il progetto finale
+
+Questa è la fase più importante, perché definisce chiaramente cosa il progetto deve fare e cosa invece rimane fuori.
+
+In questa fase si stabiliscono:
+
+- l’obiettivo principale del progetto
+- il tipo di dati utilizzati
+- il numero di asset analizzati
+- il tipo di portafogli da confrontare
+- le metriche di performance da calcolare
+- gli output finali (grafici, tabelle, risultati numerici)
+
+L'obiettivo del progetto è costruire un'applicazione Python per l'analisi quantitativa di portafoglio che:
+
+- acquisisce dati finanziari storici
+- costruisce diversi portafogli comparabili
+- esegue un backtest storico
+- calcola metriche di rischio e rendimento
+- visualizza i risultati tramite grafici e un'interfaccia interattiva
+
+Per mantenere il progetto realistico e ben controllato, alcune componenti avanzate vengono volutamente escluse nella prima versione, come:
+
+- modelli di machine learning
+- LSTM o modelli predittivi complessi
+- dati intraday ad alta frequenza
+- sistemi di trading live
+
+---
+
+### Fase 2: decidere il flusso dati completo
+
+In questa fase viene definita la pipeline dei dati, cioè il percorso che i dati seguono dall'acquisizione iniziale fino ai risultati finali.
+
+Il flusso dati del progetto segue questa sequenza logica:
+
+1. download dei dati finanziari
+2. pulizia e standardizzazione dei dati
+3. calcolo dei rendimenti
+4. costruzione delle metriche di rischio e rendimento
+5. costruzione dei portafogli
+6. simulazione tramite backtest
+7. produzione di grafici e risultati finali
+
+Questa pipeline permette di mantenere il progetto ordinato e garantisce che ogni passaggio del processo sia chiaramente identificabile.
+
+---
+
+### Fase 3: fissare cartelle e moduli
+
+Una volta definito il flusso dei dati, il passo successivo consiste nel tradurre la logica del progetto in una struttura di cartelle e moduli Python.
+
+Ogni parte del processo viene associata a un modulo specifico del progetto.
+
+Ad esempio:
+
+- acquisizione dei dati → `data_loader.py`
+- pulizia e preparazione dei dati → `preprocessing.py`
+- costruzione dei portafogli → `portfolio.py`
+- simulazione delle performance → `backtest.py`
+- visualizzazione dei risultati → `visualization.py`
+
+Questa separazione consente di mantenere il codice modulare e più facile da comprendere e mantenere.
+
+---
+
+### Fase 4: definire cosa entra e cosa esce da ogni file
+
+In questa fase si stabilisce in modo preciso quali dati ogni modulo riceve in input e quali risultati restituisce in output.
+
+Questo passaggio è fondamentale per evitare che i diversi file del progetto diventino troppo dipendenti tra loro o che alcune funzioni svolgano troppi compiti contemporaneamente.
+
+Esempi di flusso tra moduli:
+
+- `data_loader.py`
+  - input: ticker, data di inizio, data di fine
+  - output: DataFrame contenente i prezzi storici
+
+- `preprocessing.py`
+  - input: DataFrame dei prezzi
+  - output: DataFrame dei rendimenti e dati puliti
+
+- `portfolio.py`
+  - input: rendimenti storici
+  - output: pesi del portafoglio e metriche di base
+
+- `backtest.py`
+  - input: rendimenti e pesi del portafoglio
+  - output: serie temporale della performance del portafoglio
+
+- `visualization.py`
+  - input: prezzi, rendimenti e performance del portafoglio
+  - output: grafici e rappresentazioni visive dei risultati
+
+Questa fase garantisce che ogni componente del progetto abbia un ruolo chiaro e ben definito.
+
+---
+
+### Fase 5: solo allora iniziare a scrivere codice
+
+Solo dopo aver definito:
+
+- l'obiettivo del progetto
+- il flusso dei dati
+- la struttura delle cartelle
+- gli input e gli output di ogni modulo
+
+si procede con l'implementazione del codice.
+
+Seguire questo approccio permette di evitare codice disordinato e garantisce che l'intero progetto rimanga coerente, leggibile e facilmente estendibile.
