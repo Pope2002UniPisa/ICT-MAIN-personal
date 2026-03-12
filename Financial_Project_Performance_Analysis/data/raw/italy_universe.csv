@@ -1,0 +1,13 @@
+ticker,name,type
+ENI.MI,Eni,equity
+ISP.MI,Intesa Sanpaolo,equity
+UCG.MI,UniCredit,equity
+LDO.MI,Leonardo,equity
+SRG.MI,Snam,equity
+EXI.MI,iShares Core EURO STOXX 50 UCITS ETF,etf
+CSSPX.MI,iShares Core S&P 500 UCITS ETF USD,etf
+XGLE.MI,Xtrackers MSCI World UCITS ETF,etf
+EM13.MI,iShares J.P. Morgan EM Local Gov Bond UCITS ETF,bond
+BTP10.MI,BTP 10Y Example,bond
+EURIZON FLESSIBILE,Fondo Eurizon Flessibile,fund
+MEDIOLANUM STRATEGIC,Fondo Mediolanum Strategic,fund

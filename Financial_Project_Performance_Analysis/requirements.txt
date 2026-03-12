@@ -1,19 +1,5 @@
-project/
-│
-├── docs/
-├── data/
-│   ├── raw/
-│   └── processed/
-├── notebooks/
-│   └── exploratory_analysis.ipynb
-├── src/
-│   ├── universe.py
-│   ├── data_loader.py
-│   ├── preprocessing.py
-│   ├── portfolio.py
-│   ├── backtest.py
-│   ├── visualization.py
-│   └── app.py
-├── main.py
-├── requirements.txt
-└── README.md
+pandas
+rich
+requests
+beautifulsoup4
+lxml
