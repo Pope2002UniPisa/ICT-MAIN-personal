@@ -301,3 +301,5 @@ Seguire questo approccio permette di evitare codice disordinato e garantisce che
 | ...    | ...             | bond   |
 | ...    | ...             | fund   |
 ### Parto a fare questo in universe.py
+
+yfinance mette a disposizione funzioni di Search, Lookup e download; inoltre documenta strumenti di screening soprattutto per equity e fondi.
