@@ -142,6 +142,7 @@ project/
 ├── notebooks/
 │   └── exploratory_analysis.ipynb
 ├── src/
+│   ├── universe.py
 │   ├── data_loader.py
 │   ├── preprocessing.py
 │   ├── portfolio.py
@@ -299,3 +300,4 @@ Seguire questo approccio permette di evitare codice disordinato e garantisce che
 | ...    | ...             | etf    |
 | ...    | ...             | bond   |
 | ...    | ...             | fund   |
+### Parto a fare questo in universe.py
