@@ -80,6 +80,7 @@ summary_df = summary_df.sort_values("Ticker").reset_index(drop=True)
 output_file_summary = output_dir / "summary_by_ticker.csv"
 summary_df.to_csv(output_file_summary, index=False)
 
+summary_df["Total Percentage Return %"] = summary_df["Total Percentage Return"] * 100
 
 # -----------------------
 # 8) STAMPO RISULTATI
