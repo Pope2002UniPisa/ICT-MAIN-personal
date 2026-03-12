@@ -289,3 +289,13 @@ Solo dopo aver definito:
 si procede con l'implementazione del codice.
 
 Seguire questo approccio permette di evitare codice disordinato e garantisce che l'intero progetto rimanga coerente, leggibile e facilmente estendibile.
+
+# Per il momento solo BORSA ITALIANA, escludiamo ETC, ETN, Derivati e Certificati.
+## A 5 anni, e partiamo con una tabella anagrafica degli strumenti.
+| ticker | name            | type   |
+| ------ | --------------- | ------ |
+| ENI    | Eni             | equity |
+| ISP    | Intesa Sanpaolo | equity |
+| ...    | ...             | etf    |
+| ...    | ...             | bond   |
+| ...    | ...             | fund   |
