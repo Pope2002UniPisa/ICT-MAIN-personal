@@ -20,9 +20,6 @@ def load_data() -> tuple[pd.DataFrame, pd.DataFrame]:
 
 
 def filter_regular_market_hours(df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Keep only regular US market hours: 09:30-16:00 America/New_York.
-    """
     out = df.copy()
     ts_ny = out["ts_event"].dt.tz_convert("America/New_York")
 
@@ -94,20 +91,31 @@ def build_trade_events(df: pd.DataFrame) -> pd.DataFrame:
     return events
 
 
-def assign_cases_by_gap(event_log: pd.DataFrame, gap_seconds: float) -> pd.DataFrame:
+def assign_cases_by_event(event_log: pd.DataFrame) -> pd.DataFrame:
+    """
+    Build cases using market events, not fixed time windows.
+
+    Logic:
+    - a new case starts at the first event
+    - after each trade, the next event starts a new case
+    """
     out = event_log.sort_values("timestamp").reset_index(drop=True).copy()
-    out["time_diff_sec"] = out["timestamp"].diff().dt.total_seconds()
 
-    # primo evento = nuovo case
-    out["new_case"] = out["time_diff_sec"].isna() | (out["time_diff_sec"] > gap_seconds)
+    # A new case starts at the first row
+    out["new_case"] = False
+    if len(out) > 0:
+        out.loc[0, "new_case"] = True
+
+    # If the PREVIOUS event was a trade, then the CURRENT event starts a new case
+    prev_activity = out["activity"].shift(1)
+    out.loc[prev_activity == "trade", "new_case"] = True
+
     out["case_id"] = out["new_case"].cumsum().astype(int)
-
     return out
 
 
 def export_discolog(df: pd.DataFrame, out_path: Path) -> None:
     export_df = df[["case_id", "activity", "timestamp"]].copy()
-    export_df.columns = ["case_id", "activity", "timestamp"]
     export_df.to_csv(out_path, index=False)
 
 
@@ -146,28 +154,13 @@ def main() -> None:
 
     print(f"\nBase event log size: {len(event_log):,}")
 
-    gap_configs = {
-        "100ms": 0.1,
-        "250ms": 0.25,
-        "500ms": 0.5,
-        "1s": 1.0,
-    }
+    df_cases = assign_cases_by_event(event_log)
+    summarize_cases(df_cases, "event_driven_trade")
 
-    for label, gap_sec in gap_configs.items():
-        df_cases = assign_cases_by_gap(event_log, gap_sec)
-        summarize_cases(df_cases, label)
-
-        out_file = OUT_DIR / f"event_log_gap_{label}.csv"
-        export_discolog(df_cases, out_file)
-        print(f"Saved: {out_file}")
+    out_file = OUT_DIR / "event_log_event_driven_trade.csv"
+    export_discolog(df_cases, out_file)
+    print(f"Saved: {out_file}")
 
 
 if __name__ == "__main__":
     main()
-
-# Per il momento abbiamo definito:
-# - "bid_change": quando cambia il prezzo di acquisto
-# - "ask_change": quando cambia il prezzo di vendita
-# - "spread_widen": quando lo spread si allarga
-# - "spread_narrow": quando lo spread si restringe
-# - "trade": quando avviene una transazione
