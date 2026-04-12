@@ -95,4 +95,7 @@ latency
 - Prossimo step è trasformare il mercato che abbiamo definito in processo.
 - Definiamo il nuovo documento quindi che porti dai dati agli eventi del processo, quindi si definisce event_log_builder.py e si ottiene il relativo csv (dentro processed)
 - event_log.csv è pronto per Disco ed effettivamente funziona. Vediamo poi come analizzarlo
+- quando il prezzo NON è allineato tra mercati, ma questo succede perché esiste un processo sottostante: order book changes → spread cambia → trade arriva → reazione → nuovo
+- "capire il processo che porta alla differenza di prezzo", oltre che trovarle, questo potrebbe condurre a prevedere l'inefficienza, non solo a reagire. 
+- Il fatto che su Disco il tempo di reazione per determinati processi sia più lento/veloce è normale, ad esempio bid_change → ask_change = velocissimo, perché il market maker è velocissimo, mentre trade → spread_widen = lento, perché il mercato "assorbe" il trade prima di reagire. 
 - 
