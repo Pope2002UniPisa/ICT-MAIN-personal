@@ -20,6 +20,8 @@
 - https://ais.win.tue.nl/coselog/wiki/index.html
 - https://www.diag.uniroma1.it/deluca/automation/Automazione_RetiPetri.pdf     (pdf)
 - https://eprints.qut.edu.au/74865/1/bpiChallenge.pdf   (pdf)
+- https://connect2.euronext.com/en/data/client-specifications
+
 
 
 # Bibliografia interessante:
