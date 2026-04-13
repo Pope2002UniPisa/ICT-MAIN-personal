@@ -91,6 +91,8 @@ latency
 
 
 
+# I titoli da vedere sono Unilever, Shell e HSBC (tutti e tre tri-listed)
+
 - Ho fatto un primo check per Unilever e mandando analysis_ul.py si ottiene un sunto di 5.27 milioni di eventi per MBP (order book) con uno spread medio di circa 0.024, mentre per trades si ottengono 297 mila trades con prezzi compresi tra 54 e 66 circa. Ricordiamo che questi sono parameteri mensili (quindi in un solo mese, senza orderbook completo ho questi parametri)
 - Prossimo step è trasformare il mercato che abbiamo definito in processo.
 - Definiamo il nuovo documento quindi che porti dai dati agli eventi del processo, quindi si definisce event_log_builder.py e si ottiene il relativo csv (dentro processed)

@@ -1,0 +1,143 @@
+\documentclass[10pt,final]{article}
+
+% Encoding and language
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+% Graphics
+\usepackage{graphicx}
+\setkeys{Gin}{draft=false}
+
+% Page layout
+\usepackage[
+  paperheight=11in,
+  paperwidth=8.5in,
+  top=0.35in,
+  bottom=1in,
+  left=1.1in,
+  right=1.1in
+]{geometry}
+
+% Spacing
+\usepackage{setspace}
+\setstretch{1.0}
+
+% Math and symbols
+\usepackage{amsmath,amssymb,amsthm}
+
+% Better text layout
+\usepackage{microtype}
+
+% Custom title block
+\usepackage{titling}
+
+% Section style
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\bfseries\large}
+  {\thesection.}{0.5em}{}
+\titleformat{\subsection}
+  {\normalfont\bfseries}
+  {\thesubsection}{0.5em}{}
+
+% Remove date
+\date{}
+
+% Paragraph style
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
+
+% Custom title
+\pretitle{%
+\begin{center}
+\includegraphics[height=2.2cm]{logoUnipi_black.png}
+\hspace{1.8cm}
+\includegraphics[height=2.2cm]{logosantanna.png}
+
+\vspace{1.5em}
+\rule{\textwidth}{0.5pt}
+\vspace{1.3em}
+
+{\LARGE\bfseries\linespread{1.2}\selectfont}
+}
+
+\posttitle{%
+\par\vspace{2em}
+\rule{\textwidth}{0.5pt}
+\end{center}
+\vspace{1.2em}
+}
+
+\preauthor{%
+\begin{center}
+\normalsize
+}
+
+\postauthor{%
+\end{center}
+\vspace{1em}
+}
+
+\predate{}
+\postdate{}
+
+\title{%
+{\large\bfseries\selectfont
+\begin{tabular}{c}
+% Process mining analysis of arbitrage opportunities for tri-listed stocks
+Modeling Arbitrage Opportunities in Tri-Listed Stocks \\ [0.3em]
+Through Event-Based Process Mining
+\end{tabular}
+}%
+}
+
+\author{%
+  \textbf{Leonardo Pratelli}\thanks{l.pratelli3@studenti.unipi.it; s3l.pratelli@santannapisa.it}\\[0.7em]
+  \textit{University of Pisa and Scuola Superiore Sant'Anna}
+}
+
+\begin{document}
+
+\maketitle
+
+\begin{center}
+{\large\bfseries Abstract}
+\end{center}
+
+Financial markets increasingly exhibit complex microstructural dynamics, especially for assets listed across multiple exchanges. 
+Tri-listed stocks, traded simultaneously in different geographic and currency environments, 
+provide a natural setting for the emergence of short-lived arbitrage opportunities due to price discrepancies, 
+latency effects, and exchange-specific liquidity conditions. This paper proposes a novel framework that integrates 
+high-frequency financial data with process mining techniques to analyze the lifecycle of arbitrage opportunities. 
+By transforming market events into structured event logs, we model arbitrage episodes as processes composed of distinct phases, 
+such as detection, spread expansion, execution, and convergence. Using tri-listed equities (e.g., Unilever) as a case study, 
+we apply process discovery algorithms (e.g., Alpha algorithm and Petri nets) to uncover recurrent behavioral patterns in arbitrage 
+formation and resolution. The approach enables the identification of dominant process variants, timing structures, and inefficiencies 
+in market alignment across exchanges. The results demonstrate how process mining can provide a new lens for understanding financial 
+market microstructure, offering insights into the temporal dynamics and structural patterns underlying arbitrage opportunities. This 
+work contributes to bridging data science, financial economics, and process mining, opening new directions for the analysis of 
+high-frequency trading phenomena.Vedi la modifica?
+Ora?
+Ora?
+Sì vedi la modifica, grazie!
+
+\section{Introduction}
+
+Introduction part...
+
+
+
+\section{Background}
+
+Math part....
+
+\subsection{The Mechanics of Modern Electronic Markets}
+
+Law part...
+
+\section{Conclusion}
+
+Something else...
+
+\end{document}
