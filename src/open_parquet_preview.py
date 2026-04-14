@@ -18,7 +18,7 @@ def main() -> None:
 
     df = pd.read_parquet(path)
 
-# Preview,
+# Preview
     out_csv = path.with_suffix(".preview.csv")
     df.head(5000).to_csv(out_csv, index=False)
     print(f"Preview CSV saved to: {out_csv}")
