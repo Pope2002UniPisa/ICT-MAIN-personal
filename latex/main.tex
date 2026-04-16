@@ -128,9 +128,243 @@ Introduction part...
 
 
 
-\section{Background}
+\section{Mathematical Framework}
 
-Math part....
+This section introduces the mathematical framework used to detect and evaluate cross-market arbitrage opportunities. The goal is to define, in a rigorous way, the variables and functions needed to identify an executable arbitrage spread, measure the associated risks, and determine the optimal trade size.
+
+\subsection{Price Normalization}
+
+Let \(P_i^{(c_i)}(t)\) denote the price of the asset quoted on market \(i\) in local currency \(c_i\). Since the same asset may be traded on different venues and in different currencies, all prices must first be converted into a common numeraire, here taken to be the euro. Therefore, the normalized price is defined as
+
+\[
+P_i^{EUR}(t)=P_i^{(c_i)}(t)\cdot FX_{c_i\to EUR}(t),
+\]
+
+where \(FX_{c_i\to EUR}(t)\) is the exchange rate from currency \(c_i\) to EUR at time \(t\).
+
+This normalization step is essential: without expressing prices in the same currency, any comparison across markets would be economically meaningless.
+
+\subsection{Executable Arbitrage Spread}
+
+A simple price difference between two markets \(i\) and \(j\) can be written as
+
+\[
+\Delta_{ij}(t)=P_i^{EUR}(t)-P_j^{EUR}(t).
+\]
+
+However, this quantity alone is not sufficient for real arbitrage trading. In practice, one must account for the bid-ask structure of each market. If the strategy consists of selling on market \(i\) and buying on market \(j\), then the executable gross arbitrage spread per unit is
+
+\[
+g_{ij}(t)=Bid_i^{EUR}(t)-Ask_j^{EUR}(t).
+\]
+
+This is the economically relevant quantity because the trader can only sell at the bid and buy at the ask. An executable arbitrage opportunity therefore exists only if
+
+\[
+g_{ij}(t)>0,
+\]
+
+and, more realistically, only if this gross spread exceeds the relevant execution costs.
+
+\subsection{Transaction Costs}
+
+Let \(Q\) denote the traded quantity. The total transaction cost can be represented in general form as
+
+\[
+C(Q)=Q\,c_{unit}+c_{fixed},
+\]
+
+where:
+
+\begin{itemize}
+    \item \(c_{unit}\) is the marginal cost per traded unit;
+    \item \(c_{fixed}\) is the fixed cost of initiating the trade.
+\end{itemize}
+
+The term \(Q\,c_{unit}\) captures all costs that increase proportionally with the size of the position, such as proportional fees or per-share charges. The fixed term \(c_{fixed}\) accounts for costs that are paid regardless of the trade size, such as ticket fees or fixed brokerage costs.
+
+This linear-affine specification is a first approximation. In more realistic settings, market impact and slippage may generate convex costs, for instance
+
+\[
+C(Q)=c_{fixed}+c_1Q+c_2Q^2,
+\]
+
+with \(c_2>0\). The quadratic term reflects the fact that larger orders are typically more expensive to execute.
+
+\subsection{Expected Profit}
+
+Given an executable gross spread \(g_{ij}(t)\), the expected profit of a trade of size \(Q\) is
+
+\[
+\Pi(Q,t)=Q\,g_{ij}(t)-C(Q).
+\]
+
+Under the linear cost specification, this becomes
+
+\[
+\Pi(Q,t)=Q\,g_{ij}(t)-Q\,c_{unit}-c_{fixed}
+       =Q\bigl(g_{ij}(t)-c_{unit}\bigr)-c_{fixed}.
+\]
+
+This immediately implies two necessary conditions for entering the trade:
+
+\[
+g_{ij}(t)>c_{unit},
+\]
+
+and
+
+\[
+Q\bigl(g_{ij}(t)-c_{unit}\bigr)>c_{fixed}.
+\]
+
+The second inequality can be rewritten as
+
+\[
+Q>\frac{c_{fixed}}{g_{ij}(t)-c_{unit}},
+\]
+
+which identifies the minimum economically meaningful trade size needed to cover fixed costs.
+
+\subsection{Liquidity Constraint}
+
+Even when an arbitrage spread exists, the executable trade size is bounded by the liquidity available at the best quotes. If the strategy buys on market \(j\) and sells on market \(i\), then the maximum size executable without walking deeper into the order book is
+
+\[
+Q_{book}(t)=\min\{AskSize_j(t),\,BidSize_i(t)\}.
+\]
+
+This is a microstructural constraint, not a theoretical one. It ensures that the strategy is consistent with the quantities actually available at the best bid and ask levels.
+
+\subsection{Closing Risk}
+
+In an ideal frictionless arbitrage, both legs of the strategy would be executed simultaneously and the gain would be locked in immediately. In practice, however, execution may be asynchronous, partial, or delayed. As a consequence, there is a residual risk that the spread changes adversely before the position is fully established or closed. This is referred to as \emph{closing risk}.
+
+Let \(X_{ij}(t)\) denote the relevant spread or mispricing process, for example
+
+\[
+X_{ij}(t)=Bid_i^{EUR}(t)-Ask_j^{EUR}(t).
+\]
+
+Assume that, locally in time, \(X_{ij}(t)\) follows a diffusion-type dynamics:
+
+\[
+dX_{ij}(t)=\mu_{ij}\,dt+\sigma_{ij}\,dW_t,
+\]
+
+where \(\mu_{ij}\) is the local drift and \(\sigma_{ij}\) is the instantaneous volatility of the cross-market spread.
+
+Over a short horizon \(\tau\), the increment satisfies
+
+\[
+X_{ij}(t+\tau)-X_{ij}(t)\sim \mathcal N(\mu_{ij}\tau,\sigma_{ij}^2\tau).
+\]
+
+Therefore, the standard deviation of the spread change over the interval \(\tau\) is
+
+\[
+\sigma_{ij}\sqrt{\tau}.
+\]
+
+If the exposure is proportional to the traded quantity \(Q\), then a natural standard-deviation-based measure of monetary risk is
+
+\[
+R(Q,\tau)=Q\,\sigma_{ij}\sqrt{\tau}.
+\]
+
+This formula follows directly from the standard square-root-of-time scaling of diffusion processes. It is important to stress that the dependence on \(\sqrt{\tau}\), and not on \(\tau\), arises because variance grows linearly in time while standard deviation grows with the square root of time.
+
+A Value-at-Risk style version can also be introduced:
+
+\[
+VaR_\alpha(Q,\tau)=z_\alpha\,Q\,\sigma_{ij}\sqrt{\tau},
+\]
+
+where \(z_\alpha\) is the appropriate standard normal quantile.
+
+\subsection{Optimal Trade Size}
+
+The optimal trade size should balance expected profit, execution costs, and risk. Let \(m(t)\) denote the expected gross margin per unit, so that \(m(t)\) can be identified with \(g_{ij}(t)\) or with a corrected forecast of the tradable spread. A general optimization problem is
+
+\[
+\max_{Q\ge 0}\;\Bigl(Q\,m(t)-C(Q)-\lambda\,R(Q,\tau)\Bigr),
+\]
+
+where \(\lambda>0\) is a coefficient of risk aversion.
+
+Using the convex cost specification
+
+\[
+C(Q)=c_{fixed}+c_1Q+c_2Q^2
+\]
+
+and the risk measure
+
+\[
+R(Q,\tau)=Q\,\sigma_{ij}\sqrt{\tau},
+\]
+
+the objective function becomes
+
+\[
+\max_{Q\ge 0}\;
+\left[
+Q\,m(t)-c_{fixed}-c_1Q-c_2Q^2-\lambda Q\sigma_{ij}\sqrt{\tau}
+\right].
+\]
+
+Rearranging terms, one obtains
+
+\[
+\max_{Q\ge 0}\;
+\left[
+-c_2Q^2+Q\bigl(m(t)-c_1-\lambda\sigma_{ij}\sqrt{\tau}\bigr)-c_{fixed}
+\right].
+\]
+
+The first-order condition yields
+
+\[
+-2c_2Q+m(t)-c_1-\lambda\sigma_{ij}\sqrt{\tau}=0,
+\]
+
+hence the unconstrained optimal size is
+
+\[
+Q^*(t)=\frac{m(t)-c_1-\lambda\sigma_{ij}\sqrt{\tau}}{2c_2},
+\]
+
+provided that the numerator is positive. Otherwise, the optimal choice is \(Q^*(t)=0\).
+
+Finally, the executable size must respect all relevant constraints, including book liquidity, capital, and leverage. Therefore, the final implementable size is
+
+\[
+Q^{exec}(t)=\min\{Q^*(t),\,Q_{book}(t),\,Q_{capital}(t),\,Q_{lev}(t)\}.
+\]
+
+\subsection{Short Selling and Relative Mispricing}
+
+In a cross-market arbitrage framework, short selling does not necessarily rely on the belief that the absolute price of the asset will decrease. Rather, it is justified by a \emph{relative mispricing} across markets. If
+
+\[
+Bid_i^{EUR}(t)>Ask_j^{EUR}(t),
+\]
+
+then one can sell short on market \(i\) and buy on market \(j\), exploiting the temporary inconsistency between the two venues.
+
+However, this strategy is feasible only if short selling is operationally possible, borrowing costs are manageable, and the residual execution risk does not offset the expected gain. These considerations should therefore be incorporated into the total cost function \(C(Q)\).
+
+\subsection{Process Mining Extension}
+
+Process mining can be used as a complementary layer to analyze the operational decision process underlying arbitrage execution. For example, one may define an event log with activities such as
+
+\[
+\texttt{gap\_detected} \rightarrow \texttt{liquidity\_checked} \rightarrow \texttt{size\_computed} \rightarrow \texttt{trade\_executed} \rightarrow \texttt{position\_closed}.
+\]
+
+In this context, process mining is useful to identify recurring decision patterns, execution variants, delays, and bottlenecks. It may also help evaluate which decision sequences are associated with better outcomes.
+
+However, the estimation of the optimal trade size itself remains primarily an optimization problem based on prices, liquidity, costs, and risk. Therefore, process mining should be interpreted as a supporting analytical layer rather than as the main mathematical engine for computing \(Q^*(t)\).
 
 \subsection{The Mechanics of Modern Electronic Markets}
 
