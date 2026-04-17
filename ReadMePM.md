@@ -152,3 +152,61 @@ project/
     ├── tables/
     ├── logs/
     └── figures/
+
+
+    cross_market_engine.py fa queste cose:
+
+legge data/processed/cross_market/{symbol}_cross_market_mbp1.parquet
+separa i mercati (BASE_REAL, LSE, AMS)
+sincronizza le quote con tolleranza massima di 10 ms
+calcola il gap operativo:
+......
+e anche il contrario
+individua le finestre arbitrali
+salva una tabella opportunità per ogni simbolo in:
+data/processed/opportunities/
+
+Per HSBC, per ora, lavora sulla coppia:
+
+BASE_REAL
+LSE
+
+La proxy HK resta separata e la useremo dopo.
+
+
+
+
+min_gap_eur = 0.0
+quindi il motore ti trova tutte le finestre con gap positivo.
+Dopo inseriremo:
+
+costi
+buffer di rischio
+filtro più serio
+Seconda nota
+
+La sincronizzazione per ora è:
+
+timeline del mercato A
+merge_asof backward su B
+tolleranza 10 ms
+
+Per partire va bene. È una base seria.
+
+
+UL e SHELL vengono filtrati su triple overlap vero;
+HSBC viene filtrato su pairwise overlap vero;
+la soglia minima è 0.003 EUR;
+c’è un costo unitario;
+c’è un buffer di rischio con 
+𝜎
+𝜏
+σ
+τ
+	​
+
+;
+vengono eliminate le finestre troppo corte o troppo fragili.
+
+La simulazione usa un tasso di cambio fisso e non tick by tick aggiornato nella giornata.
+(deformazione controllata del mercato base)
