@@ -72,7 +72,7 @@ SYMBOL_CONFIG = {
 # dizionario che raccoglie tutti i parametri numerici che controllano
 # il comportamento di simulazione
 SIMULATION_CONFIG = {
-    # Qui parte la logica del backward-asof:
+    # Qui parte la logica del BACKWARD-ASOF:
     "sync_tolerance_ms": 10,
     "max_hold_ms": 10,
     # dizionario: associa ogni valuta al suo tasso di conversione verso l'Euro
