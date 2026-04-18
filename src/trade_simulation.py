@@ -6,6 +6,29 @@ import pandas as pd
 
 from .config_simbols import BASE_DIR, SYMBOL_CONFIG, SIMULATION_CONFIG
 
+# In trade_simulation.py la prima riga è:
+# from .config_simbols import BASE_DIR, SYMBOL_CONFIG, SIMULATION_CONFIG
+# Il punto davanti a config_simbols significa "cerca questo file nella stessa 
+# cartella in cui sono io". È un import relativo — relativo alla posizione del file corrente.
+# Per usare import relativi, Python deve sapere che src/ è un pacchetto, cioè 
+# una cartella che fa parte di un progetto più grande. Solo in quel caso ha senso 
+# dire "cerca nella mia stessa cartella".
+
+# Il flag -m cambia completamente il modo in cui Python carica il file. Invece di dire "esegui questo file come script", dice "esegui questo modulo come parte del pacchetto src".
+# In pratica Python:
+# parte dalla root del progetto (la root è la cartella più esterna che contiene tutto il resto)
+# entra in src/ riconoscendolo come pacchetto (grazie al file src/__init__.py che hai)
+# carica trade_simulation come modulo figlio di src
+# ora il . nell'import ha senso: "cerca nella stessa cartella del pacchetto" → trova config_simbols.py
+
+# src/__init__.py — cos'è
+# È un file vuoto (o quasi) che ha un solo scopo: dire a Python "questa cartella è un pacchetto, non una semplice cartella".
+# Senza di lui, src/ è solo una cartella normale sul disco — Python non la riconosce come qualcosa di speciale. Con lui dentro, Python la tratta come un pacchetto e permette gli import relativi con il punto.
+
+# lanci python3.13 -m src.trade_simulation, Python parte da lì e vede:
+# "c'è una cartella src/ con dentro __init__.py → è un pacchetto"
+# "dentro src/ c'è trade_simulation.py → è il modulo che voglio eseguire"
+# "dentro src/ c'è anche config_simbols.py → quando trade_simulation scrive from .config_simbols import ... so dove cercarlo"
 
 SAMPLES_DIR = BASE_DIR / "opportunity_samples"
 OUT_DIR = BASE_DIR / "simulated_trades"
