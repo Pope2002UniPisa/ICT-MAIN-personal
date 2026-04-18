@@ -88,3 +88,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# Ho filtrato i titoli, rispetto a mbp1 o trades, per i momenti di overlapping
+# quindi vedo i titoli solo per le finestre di overlap
