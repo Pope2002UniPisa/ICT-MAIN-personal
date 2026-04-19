@@ -374,4 +374,88 @@ Law part...
 
 Something else...
 
+\section{Analisi dei Risultati di Simulazione}
+
+Questa sezione presenta un'analisi empirica dei risultati ottenuti attraverso il framework di simulazione, con particolare attenzione alla validazione statistica del modello, alle caratteristiche delle finestre di arbitraggio e alle performance economiche della strategia.
+
+\subsection{Validazione della Simulazione}
+
+La validazione è stata condotta confrontando le principali proprietà statistiche dei dati simulati con quelle osservate nel mercato reale. In particolare, sono state analizzate la volatilità dei rendimenti (ret\_std) e lo spread medio (spread\_mean).
+
+I risultati mostrano che:
+
+\begin{itemize}
+    \item Per i titoli UL e SHELL, la volatilità simulata risulta ben allineata a quella reale, indicando che il modello è in grado di riprodurre correttamente la dinamica dei prezzi a livello tick-by-tick.
+    \item Per HSBC, la volatilità rimane sottostimata rispetto al reale (circa il 40\% in meno). Questo è coerente con la natura dell'asset (ADR), la cui dinamica è influenzata da mercati non direttamente osservati (Hong Kong), difficili da replicare in assenza di dati reali.
+    \item Lo spread medio simulato risulta molto vicino al reale, in particolare per la venue AMS, mentre per LSE si osserva una leggera sottostima (~15\%), attribuibile agli effetti di conversione valutaria.
+\end{itemize}
+
+Tuttavia, permane una criticità importante:
+
+\begin{itemize}
+    \item La variabilità dello spread (spread\_std) risulta ancora significativamente inferiore rispetto al mercato reale (circa un ordine di grandezza). Questo implica che la simulazione genera condizioni di mercato più stabili rispetto alla realtà, riducendo la presenza di picchi di liquidità e disallineamenti improvvisi.
+\end{itemize}
+
+Questo limite suggerisce che, pur essendo corretta in termini di primi momenti statistici, la simulazione non cattura completamente la microstruttura del mercato.
+
+\subsection{Finestre di Arbitraggio}
+
+L'analisi delle opportunità di arbitraggio evidenzia la presenza di un numero significativo di finestre temporali in cui il differenziale di prezzo tra mercati è positivo e potenzialmente sfruttabile.
+
+In particolare:
+
+\begin{itemize}
+    \item Le finestre hanno una durata media compresa tra 200 e 300 millisecondi.
+    \item Il gap medio per unità è compreso tra 0.05 e 0.08 EUR.
+    \item Il numero di finestre è proporzionale alla dimensione del dataset: SHELL presenta il numero più elevato di opportunità grazie alla maggiore quantità di dati disponibili.
+\end{itemize}
+
+Un risultato particolarmente rilevante è la distribuzione simmetrica delle opportunità tra le due direzioni (vendita su un mercato e acquisto sull'altro, e viceversa). Questo indica l'assenza di bias sistematici nella simulazione, suggerendo che le inefficienze generate sono di natura puramente stocastica e non strutturale.
+
+Dal punto di vista economico, questo è coerente con mercati efficienti, in cui le opportunità di arbitraggio emergono temporaneamente ma non persistono in una direzione specifica.
+
+\subsection{Performance della Strategia di Trading}
+
+La simulazione dell'esecuzione delle strategie di arbitraggio mostra risultati coerenti tra i diversi titoli analizzati.
+
+In particolare:
+
+\begin{itemize}
+    \item Il profitto lordo aggregato varia significativamente tra i titoli, riflettendo la diversa frequenza delle opportunità.
+    \item Il profitto netto, dopo costi di transazione e buffer di rischio, si attesta intorno al 37\%-38\% del profitto lordo.
+\end{itemize}
+
+Questo risultato è particolarmente significativo, in quanto indica che:
+
+\begin{itemize}
+    \item I costi di transazione e il rischio di esecuzione assorbono circa il 60\% del valore teorico dell'arbitraggio.
+    \item La strategia rimane comunque profittevole, ma con margini ridotti, in linea con quanto osservato nei mercati ad alta frequenza.
+\end{itemize}
+
+La stabilità del margine netto tra diversi asset suggerisce che il modello di costo e rischio implementato è coerente e ben calibrato.
+
+\subsection{Limiti del Modello}
+
+Nonostante i risultati complessivamente positivi, emergono alcuni limiti strutturali:
+
+\begin{itemize}
+    \item La bassa variabilità dello spread implica una distribuzione delle opportunità troppo uniforme rispetto alla realtà.
+    \item L'assenza di shock estremi e dinamiche di volatilità clusterizzata riduce la presenza di eventi ad alto profitto.
+    \item La simulazione delle venue non incorpora pienamente effetti di latenza e competizione tra operatori, tipici dei contesti HFT reali.
+\end{itemize}
+
+Questi elementi suggeriscono che il modello rappresenta una buona approssimazione di primo livello, ma richiede ulteriori estensioni per catturare completamente la complessità della microstruttura di mercato.
+
+\subsection{Conclusione}
+
+In sintesi, i risultati mostrano che il framework proposto è in grado di:
+
+\begin{itemize}
+    \item Riprodurre realisticamente i principali indicatori di mercato (prezzi, volatilità, spread medio);
+    \item Identificare e modellare in modo coerente le opportunità di arbitraggio;
+    \item Simulare strategie di trading con performance economiche plausibili.
+\end{itemize}
+
+Tuttavia, il modello rimane una rappresentazione semplificata della realtà. L'integrazione di dinamiche più complesse, come la variabilità dello spread e gli effetti di latenza, rappresenta una direzione naturale per sviluppi futuri.
+
 \end{document}

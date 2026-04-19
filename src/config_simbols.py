@@ -118,9 +118,9 @@ SIMULATION_CONFIG = {
 # --- Filtri di qualità sui dati ---
     # durata minima in millisecondi che un evento deve avere
     # per essere incluso nell'analisi (filtra eventi troppo brevi)
-    "min_duration_ms": 1.0,
-    # almeno 2 osservazioni (bid-ask) devono essere presenti in una finestra di arbitraggio
-    "min_obs_per_window": 2,
+    "min_duration_ms": 3.0,
+    # almeno 4 osservazioni (bid-ask) devono essere presenti in una finestra di arbitraggio
+    "min_obs_per_window": 4,
 # --- Dimensione e cadenza delle operazioni simulate ---
     "trade_block_size": 1000,
     "trade_step_ms": 10,   
