@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
-import numpy as np
+import numpy as np # NumPy è la libreria fondamentale per il calcolo numerico in Python, usata per array, operazioni matematiche, generazione di numeri casuali e molto altro.
 import pandas as pd
 
 from .config_simbols import SYMBOL_CONFIG, SIMULATION_CONFIG, BASE_DIR, SIM_DIR
