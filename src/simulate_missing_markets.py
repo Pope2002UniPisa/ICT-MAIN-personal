@@ -280,3 +280,18 @@ def simulate_missing_markets(seed: int = 42) -> None:
             hk_sent.to_parquet(hk_out, index=False)
 
     print("[SIM] Done.")
+
+# python -m src.simulate_missing_markets
+
+# python src/open_parquet_preview.py data/processed/simulated/UL_AMS_mbp1_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/UL_AMS_trades_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/UL_LSE_mbp1_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/UL_LSE_trades_sim.parquet
+
+# python src/open_parquet_preview.py data/processed/simulated/SHELL_AMS_mbp1_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/SHELL_AMS_trades_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/SHELL_LSE_mbp1_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/SHELL_LSE_trades_sim.parquet
+
+# python src/open_parquet_preview.py data/processed/simulated/HSBC_LSE_mbp1_sim.parquet
+# python src/open_parquet_preview.py data/processed/simulated/HSBC_LSE_trades_sim.parquet
