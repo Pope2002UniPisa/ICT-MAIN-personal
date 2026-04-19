@@ -124,8 +124,8 @@ def _simulate_mbp_for_venue(
     micro_noise = rng.normal(0.0, noise_bps_std / 10000.0, len(mbp))
     spread_mult = np.clip(
         rng.normal(spread_mult_mean, spread_mult_std, len(mbp)),
-        0.7,
-        1.6,
+        0.5,
+        3.5,
     )
     size_mult_bid = np.clip(
         rng.normal(size_mult_mean, size_mult_std, len(mbp)),
@@ -280,6 +280,10 @@ def simulate_missing_markets(seed: int = 42) -> None:
             hk_sent.to_parquet(hk_out, index=False)
 
     print("[SIM] Done.")
+
+
+if __name__ == "__main__":
+    simulate_missing_markets()
 
 # python -m src.simulate_missing_markets
 

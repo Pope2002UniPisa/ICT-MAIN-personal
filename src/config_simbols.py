@@ -82,11 +82,11 @@ SIMULATION_CONFIG = {
         "EUR": 1.00,
         "HKD": 0.118,  # 1 HKD = 0.118 EUR
     },
-    "price_noise_bps_std": 0.6,
+    "price_noise_bps_std": 5.0,
     # decimale: valore medio del moltiplicatore applicato allo spread bid-ask simulato
     # (1.05 significa spread 5% più largo rispetto al mercato base)
-    "spread_multiplier_mean": 1.05,
-    "spread_multiplier_std": 0.03,
+    "spread_multiplier_mean": 1.8,
+    "spread_multiplier_std": 0.20,
     # quantità di azioni disponibile in ogni ordine non è identica a quella del mercato base
     # in media gli ordini sui mercati simulati hanno il 95% della quantità del mercato base. 
     # in linea con le aspettattive reali dato che i mercati secondari rispetto all'US
