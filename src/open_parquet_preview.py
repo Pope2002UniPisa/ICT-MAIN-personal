@@ -22,7 +22,7 @@ def main() -> None:
     out_csv = path.with_suffix(".preview.csv")
     if "market_key" in df.columns:
         preview = (
-            df.groupby("market_key", group_keys=False)
+            df.groupby("market_key", group_keys=False) # li prende in ordine alfabetico
             .apply(lambda g: g.head(1000))
             .sort_values("ts_event")
             .reset_index(drop=True)
@@ -44,7 +44,6 @@ def main() -> None:
     # python src/open_parquet_preview.py data/processed/UL_mbp1.parquet
     # python src/open_parquet_preview.py data/processed/SHELL_mbp1.parquet
     # python src/open_parquet_preview.py data/processed/HSBC_mbp1.parquet
-
 
 if __name__ == "__main__":
     main()
