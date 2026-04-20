@@ -3,3 +3,7 @@ rich
 yfinance
 databento
 numpy
+matplotlib
+
+
+# pip install -r requirements.txt
