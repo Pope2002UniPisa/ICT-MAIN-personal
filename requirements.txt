@@ -4,6 +4,7 @@ yfinance
 databento
 numpy
 matplotlib
+pm4py
 
 
 # pip install -r requirements.txt
