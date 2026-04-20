@@ -4,6 +4,7 @@
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+\usepackage{hyperref}
 
 % Graphics
 \usepackage{graphicx}
@@ -105,272 +106,133 @@ Through Event-Based Process Mining
 {\large\bfseries Abstract}
 \end{center}
 
-Financial markets increasingly exhibit complex microstructural dynamics, especially for assets listed across multiple exchanges. 
-Tri-listed stocks, traded simultaneously in different geographic and currency environments, 
-provide a natural setting for the emergence of short-lived arbitrage opportunities due to price discrepancies, 
-latency effects, and exchange-specific liquidity conditions. This paper proposes a novel framework that integrates 
-high-frequency financial data with process mining techniques to analyze the lifecycle of arbitrage opportunities. 
-By transforming market events into structured event logs, we model arbitrage episodes as processes composed of distinct phases, 
-such as detection, spread expansion, execution, and convergence. Using tri-listed equities (e.g., Unilever) as a case study, 
-we apply process discovery algorithms (e.g., Alpha algorithm and Petri nets) to uncover recurrent behavioral patterns in arbitrage 
-formation and resolution. The approach enables the identification of dominant process variants, timing structures, and inefficiencies 
-in market alignment across exchanges. The results demonstrate how process mining can provide a new lens for understanding financial 
-market microstructure, offering insights into the temporal dynamics and structural patterns underlying arbitrage opportunities. This 
-work contributes to bridging data science, financial economics, and process mining, opening new directions for the analysis of 
-high-frequency trading phenomena.Vedi la modifica?
-Ora?
-Ora?
-Sì vedi la modifica, grazie!
+Questo progetto analizza il fenomeno delle opportunità di arbitraggio tra mercati finanziari, con particolare riferimento a titoli quotati simultaneamente su più borse. L’attenzione è focalizzata su tre società: Unilever (UL), Shell (SHELL) e HSBC, considerate come casi studio rappresentativi di titoli multi-listed.
+
+L’obiettivo principale è individuare e analizzare le finestre temporali in cui lo stesso asset presenta differenze di prezzo tra diverse piazze di scambio, tali da generare potenziali opportunità di arbitraggio. A tal fine, vengono utilizzati dati finanziari ad alta frequenza e un framework sviluppato in Python per la pulizia, l’allineamento e la trasformazione dei dati.
+
+Il progetto integra inoltre una componente di simulazione, necessaria per ricostruire mercati non direttamente osservabili, e una fase di validazione per confrontare le proprietà statistiche dei dati simulati con quelli reali. Le opportunità individuate vengono poi analizzate attraverso una simulazione di trading che tiene conto di costi di transazione e rischio.
+
+Infine, viene introdotto un approccio di process mining per rappresentare le dinamiche delle opportunità di arbitraggio come sequenze di eventi, consentendo una visione strutturata e interpretativa del fenomeno.
+
+Nel complesso, il lavoro si propone di fornire una prima analisi integrata tra finanza quantitativa, simulazione e process mining, offrendo strumenti utili per comprendere meglio le dinamiche dei mercati finanziari multi-venue.
 
 \section{Introduction}
 
-Introduction part...
+
+\section{...}
 
 
+\section{Normalizzazione dei prezzi}
 
-\section{Mathematical Framework}
+Sia $P_i^{(c_i)}(t)$ il prezzo di un asset nel mercato $i$ espresso nella valuta locale $c_i$.
 
-This section introduces the mathematical framework used to detect and evaluate cross-market arbitrage opportunities. The goal is to define, in a rigorous way, the variables and functions needed to identify an executable arbitrage spread, measure the associated risks, and determine the optimal trade size.
-
-\subsection{Price Normalization}
-
-Let \(P_i^{(c_i)}(t)\) denote the price of the asset quoted on market \(i\) in local currency \(c_i\). Since the same asset may be traded on different venues and in different currencies, all prices must first be converted into a common numeraire, here taken to be the euro. Therefore, the normalized price is defined as
+La conversione in euro è definita come:
 
 \[
-P_i^{EUR}(t)=P_i^{(c_i)}(t)\cdot FX_{c_i\to EUR}(t),
+P_i^{(EUR)}(t) = P_i^{(c_i)}(t) \cdot FX_{c_i \to EUR}(t)
 \]
 
-where \(FX_{c_i\to EUR}(t)\) is the exchange rate from currency \(c_i\) to EUR at time \(t\).
-
-This normalization step is essential: without expressing prices in the same currency, any comparison across markets would be economically meaningless.
-
-\subsection{Executable Arbitrage Spread}
-
-A simple price difference between two markets \(i\) and \(j\) can be written as
-
-\[
-\Delta_{ij}(t)=P_i^{EUR}(t)-P_j^{EUR}(t).
-\]
-
-However, this quantity alone is not sufficient for real arbitrage trading. In practice, one must account for the bid-ask structure of each market. If the strategy consists of selling on market \(i\) and buying on market \(j\), then the executable gross arbitrage spread per unit is
-
-\[
-g_{ij}(t)=Bid_i^{EUR}(t)-Ask_j^{EUR}(t).
-\]
-
-This is the economically relevant quantity because the trader can only sell at the bid and buy at the ask. An executable arbitrage opportunity therefore exists only if
-
-\[
-g_{ij}(t)>0,
-\]
-
-and, more realistically, only if this gross spread exceeds the relevant execution costs.
-
-\subsection{Transaction Costs}
-
-Let \(Q\) denote the traded quantity. The total transaction cost can be represented in general form as
-
-\[
-C(Q)=Q\,c_{unit}+c_{fixed},
-\]
-
-where:
-
+dove:
 \begin{itemize}
-    \item \(c_{unit}\) is the marginal cost per traded unit;
-    \item \(c_{fixed}\) is the fixed cost of initiating the trade.
+    \item $P_i^{(c_i)}(t)$ è il prezzo nel mercato $i$ in valuta locale
+    \item $FX_{c_i \to EUR}(t)$ è il tasso di cambio dalla valuta $c_i$ all'euro
+    \item $P_i^{(EUR)}(t)$ è il prezzo convertito in euro
 \end{itemize}
 
-The term \(Q\,c_{unit}\) captures all costs that increase proportionally with the size of the position, such as proportional fees or per-share charges. The fixed term \(c_{fixed}\) accounts for costs that are paid regardless of the trade size, such as ticket fees or fixed brokerage costs.
 
-This linear-affine specification is a first approximation. In more realistic settings, market impact and slippage may generate convex costs, for instance
+\section{Definizione del gap di arbitraggio}
 
-\[
-C(Q)=c_{fixed}+c_1Q+c_2Q^2,
-\]
-
-with \(c_2>0\). The quadratic term reflects the fact that larger orders are typically more expensive to execute.
-
-\subsection{Expected Profit}
-
-Given an executable gross spread \(g_{ij}(t)\), the expected profit of a trade of size \(Q\) is
+Il differenziale di prezzo tra due mercati $i$ e $j$ è:
 
 \[
-\Pi(Q,t)=Q\,g_{ij}(t)-C(Q).
+gap_{i,j}(t) = P_i^{(EUR)}(t) - P_j^{(EUR)}(t)
 \]
 
-Under the linear cost specification, this becomes
+dove:
+\begin{itemize}
+    \item $gap_{i,j}(t)$ rappresenta la differenza di prezzo tra i due mercati
+\end{itemize}
+
+
+\section{Condizione di arbitraggio}
+
+Esiste un'opportunità di arbitraggio se:
 
 \[
-\Pi(Q,t)=Q\,g_{ij}(t)-Q\,c_{unit}-c_{fixed}
-       =Q\bigl(g_{ij}(t)-c_{unit}\bigr)-c_{fixed}.
+|gap_{i,j}(t)| > threshold_{i,j}(t)
 \]
 
-This immediately implies two necessary conditions for entering the trade:
+dove:
+\begin{itemize}
+    \item $threshold_{i,j}(t)$ è la soglia minima necessaria per coprire costi e rischio
+\end{itemize}
+
+
+\section{Soglia di arbitraggio}
+
+La soglia è definita come:
 
 \[
-g_{ij}(t)>c_{unit},
+threshold_{i,j}(t) = cost_{unit} + buffer_{fixed} + buffer_{risk}(t)
 \]
 
-and
+dove:
+\begin{itemize}
+    \item $cost_{unit}$ è il costo di transazione per unità
+    \item $buffer_{fixed}$ è un margine minimo richiesto
+    \item $buffer_{risk}(t)$ è il contributo dovuto al rischio
+\end{itemize}
+
+
+\section{Buffer di rischio}
+
+Il buffer di rischio è definito come:
 
 \[
-Q\bigl(g_{ij}(t)-c_{unit}\bigr)>c_{fixed}.
+buffer_{risk}(t) = \lambda \cdot \sigma(t) \cdot \sqrt{\tau}
 \]
 
-The second inequality can be rewritten as
+dove:
+\begin{itemize}
+    \item $\lambda$ è il coefficiente di avversione al rischio
+    \item $\sigma(t)$ è la volatilità locale del gap
+    \item $\tau$ è l'orizzonte temporale espresso in secondi
+\end{itemize}
+
+
+\section{Profitto per trade}
+
+Il profitto netto per unità è:
 
 \[
-Q>\frac{c_{fixed}}{g_{ij}(t)-c_{unit}},
+\pi(t) = |gap_{i,j}(t)| - threshold_{i,j}(t)
 \]
 
-which identifies the minimum economically meaningful trade size needed to cover fixed costs.
+dove:
+\begin{itemize}
+    \item $\pi(t)$ è il profitto netto per unità
+\end{itemize}
 
-\subsection{Liquidity Constraint}
 
-Even when an arbitrage spread exists, the executable trade size is bounded by the liquidity available at the best quotes. If the strategy buys on market \(j\) and sells on market \(i\), then the maximum size executable without walking deeper into the order book is
+\section{Profitto totale}
+
+Il profitto totale per un blocco di dimensione $Q$ è:
 
 \[
-Q_{book}(t)=\min\{AskSize_j(t),\,BidSize_i(t)\}.
+\Pi(t) = Q \cdot \pi(t)
 \]
 
-This is a microstructural constraint, not a theoretical one. It ensures that the strategy is consistent with the quantities actually available at the best bid and ask levels.
-
-\subsection{Closing Risk}
-
-In an ideal frictionless arbitrage, both legs of the strategy would be executed simultaneously and the gain would be locked in immediately. In practice, however, execution may be asynchronous, partial, or delayed. As a consequence, there is a residual risk that the spread changes adversely before the position is fully established or closed. This is referred to as \emph{closing risk}.
-
-Let \(X_{ij}(t)\) denote the relevant spread or mispricing process, for example
-
-\[
-X_{ij}(t)=Bid_i^{EUR}(t)-Ask_j^{EUR}(t).
-\]
-
-Assume that, locally in time, \(X_{ij}(t)\) follows a diffusion-type dynamics:
-
-\[
-dX_{ij}(t)=\mu_{ij}\,dt+\sigma_{ij}\,dW_t,
-\]
-
-where \(\mu_{ij}\) is the local drift and \(\sigma_{ij}\) is the instantaneous volatility of the cross-market spread.
-
-Over a short horizon \(\tau\), the increment satisfies
-
-\[
-X_{ij}(t+\tau)-X_{ij}(t)\sim \mathcal N(\mu_{ij}\tau,\sigma_{ij}^2\tau).
-\]
-
-Therefore, the standard deviation of the spread change over the interval \(\tau\) is
-
-\[
-\sigma_{ij}\sqrt{\tau}.
-\]
-
-If the exposure is proportional to the traded quantity \(Q\), then a natural standard-deviation-based measure of monetary risk is
-
-\[
-R(Q,\tau)=Q\,\sigma_{ij}\sqrt{\tau}.
-\]
-
-This formula follows directly from the standard square-root-of-time scaling of diffusion processes. It is important to stress that the dependence on \(\sqrt{\tau}\), and not on \(\tau\), arises because variance grows linearly in time while standard deviation grows with the square root of time.
-
-A Value-at-Risk style version can also be introduced:
-
-\[
-VaR_\alpha(Q,\tau)=z_\alpha\,Q\,\sigma_{ij}\sqrt{\tau},
-\]
-
-where \(z_\alpha\) is the appropriate standard normal quantile.
-
-\subsection{Optimal Trade Size}
-
-The optimal trade size should balance expected profit, execution costs, and risk. Let \(m(t)\) denote the expected gross margin per unit, so that \(m(t)\) can be identified with \(g_{ij}(t)\) or with a corrected forecast of the tradable spread. A general optimization problem is
-
-\[
-\max_{Q\ge 0}\;\Bigl(Q\,m(t)-C(Q)-\lambda\,R(Q,\tau)\Bigr),
-\]
-
-where \(\lambda>0\) is a coefficient of risk aversion.
-
-Using the convex cost specification
-
-\[
-C(Q)=c_{fixed}+c_1Q+c_2Q^2
-\]
-
-and the risk measure
-
-\[
-R(Q,\tau)=Q\,\sigma_{ij}\sqrt{\tau},
-\]
-
-the objective function becomes
-
-\[
-\max_{Q\ge 0}\;
-\left[
-Q\,m(t)-c_{fixed}-c_1Q-c_2Q^2-\lambda Q\sigma_{ij}\sqrt{\tau}
-\right].
-\]
-
-Rearranging terms, one obtains
-
-\[
-\max_{Q\ge 0}\;
-\left[
--c_2Q^2+Q\bigl(m(t)-c_1-\lambda\sigma_{ij}\sqrt{\tau}\bigr)-c_{fixed}
-\right].
-\]
-
-The first-order condition yields
-
-\[
--2c_2Q+m(t)-c_1-\lambda\sigma_{ij}\sqrt{\tau}=0,
-\]
-
-hence the unconstrained optimal size is
-
-\[
-Q^*(t)=\frac{m(t)-c_1-\lambda\sigma_{ij}\sqrt{\tau}}{2c_2},
-\]
-
-provided that the numerator is positive. Otherwise, the optimal choice is \(Q^*(t)=0\).
-
-Finally, the executable size must respect all relevant constraints, including book liquidity, capital, and leverage. Therefore, the final implementable size is
-
-\[
-Q^{exec}(t)=\min\{Q^*(t),\,Q_{book}(t),\,Q_{capital}(t),\,Q_{lev}(t)\}.
-\]
-
-\subsection{Short Selling and Relative Mispricing}
-
-In a cross-market arbitrage framework, short selling does not necessarily rely on the belief that the absolute price of the asset will decrease. Rather, it is justified by a \emph{relative mispricing} across markets. If
-
-\[
-Bid_i^{EUR}(t)>Ask_j^{EUR}(t),
-\]
-
-then one can sell short on market \(i\) and buy on market \(j\), exploiting the temporary inconsistency between the two venues.
-
-However, this strategy is feasible only if short selling is operationally possible, borrowing costs are manageable, and the residual execution risk does not offset the expected gain. These considerations should therefore be incorporated into the total cost function \(C(Q)\).
-
-\subsection{Process Mining Extension}
-
-Process mining can be used as a complementary layer to analyze the operational decision process underlying arbitrage execution. For example, one may define an event log with activities such as
-
-\[
-\texttt{gap\_detected} \rightarrow \texttt{liquidity\_checked} \rightarrow \texttt{size\_computed} \rightarrow \texttt{trade\_executed} \rightarrow \texttt{position\_closed}.
-\]
-
-In this context, process mining is useful to identify recurring decision patterns, execution variants, delays, and bottlenecks. It may also help evaluate which decision sequences are associated with better outcomes.
-
-However, the estimation of the optimal trade size itself remains primarily an optimization problem based on prices, liquidity, costs, and risk. Therefore, process mining should be interpreted as a supporting analytical layer rather than as the main mathematical engine for computing \(Q^*(t)\).
+dove:
+\begin{itemize}
+    \item $Q$ è la quantità scambiata
+    \item $\Pi(t)$ è il profitto totale
+\end{itemize}
 
 \subsection{The Mechanics of Modern Electronic Markets}
 
 Law part...
 
-\section{Conclusion}
+\section{Conclusioni}
 
 Something else...
 
@@ -457,5 +319,101 @@ In sintesi, i risultati mostrano che il framework proposto è in grado di:
 \end{itemize}
 
 Tuttavia, il modello rimane una rappresentazione semplificata della realtà. L'integrazione di dinamiche più complesse, come la variabilità dello spread e gli effetti di latenza, rappresenta una direzione naturale per sviluppi futuri.
+
+\section{Sitografia}
+
+\begin{itemize}
+
+\item \url{https://it.wikipedia.org/wiki/Process_mining#cite_note-9}
+\item \url{https://www.processmining.org/}
+\item \url{https://sourceforge.net/projects/prom/}
+\item \url{https://sourceforge.net/projects/promimport/}
+\item \url{https://it.wikipedia.org/wiki/Data_mining}
+\item \url{https://it.wikipedia.org/wiki/Business_process_modeling}
+\item \url{https://www.ibm.com/it-it/products/streamsets?utm_content=SRCWW&p1=Search&p4=359104816748&p5=b&p9=182804128202&gclsrc=aw.ds&gad_source=1&gad_campaignid=22698797891&gbraid=0AAAAA-h2TOERLucLzv7f43ygLwW_50TAs&gclid=CjwKCAjw1tLOBhAMEiwAiPkRHnE2vcVCBq0DgaVwLBaGfLWet0zZg5U4ydt60aTkkDHk42eMZDbyeBoC9zsQAvD_BwE}
+\item \url{https://it.wikipedia.org/wiki/Rete_di_Petri}
+\item \url{https://www.youtube.com/watch?v=5thuFbUQ7Qg}
+\item \url{https://en.wikipedia.org/wiki/Alpha_algorithm}
+\item \url{https://bi-rex.it/process-mining-efficienza-compliance-automazione/}
+\item \url{https://www.math.unipd.it/~deleoni/documenti/MondoDigitale.pdf}
+\item \url{https://www.tf-pm.org/}
+\item \url{https://www.xes-standard.org/}
+\item \url{https://ieeexplore.ieee.org/document/10267858}
+\item \url{https://www.tf-pm.org/resources/manifesto}
+\item \url{https://mpmx.com/process-intelligence-platform?utm_term=software%20process%20mining&utm_campaign=%5BmpmX%5D+-+Process+Mining+-+EU+EN+-+Generic&utm_source=adwords&utm_medium=ppc}
+\item \url{https://www.youtube.com/watch?v=HEb_ukW7rEw}
+\item \url{https://ais.win.tue.nl/coselog/wiki/index.html}
+\item \url{https://www.diag.uniroma1.it/deluca/automation/Automazione_RetiPetri.pdf}
+\item \url{https://eprints.qut.edu.au/74865/1/bpiChallenge.pdf}
+\item \url{https://connect2.euronext.com/en/data/client-specifications}
+\item \url{https://www.bis.org/publ/work955.pdf}
+\item \url{https://www.orafinanza.it/it/a-che-ora-apre-la-borsa-americana-orario-apertura-wall-street/}
+\item \url{https://databento.com/docs/}
+\item \url{https://realpython.com/ref/glossary/type-hint/}
+\item \url{https://disi.unitn.it/~passerini/teaching/2020-2021/informatica/slides/32_pandas/pandas.html}
+\item \url{https://www.degiro.it/trading-conoscenza/informazioni-sulle-borse/orari-apertura-borse}
+\item \url{https://github.com/databento/databento-python}
+\item \url{https://cris.fbk.eu/retrieve/814415f9-7fc6-4eb0-9ceb-af54f6699395/Clustering-Based%20Predictive%20Process%20Monitoring.pdf}
+\item \url{https://iris.unitn.it/retrieve/329ea5a0-8688-40b2-a1c0-3a7eacb80da7/978-3-031-08848-3_10.pdf}
+\item \url{https://www.vdaalst.com/publications/p609.pdf}
+\item \url{https://www.vdaalst.com/publications/p1163.pdf}
+\item \url{https://www.vdaalst.rwth-aachen.de/publications/p1056.pdf}
+\item \url{https://datashop.cboe.com/cboe-us-equities-pitch}
+\item \url{http://bit.ly/41JzBfb}
+\item \url{https://data.nasdaq.com/databases/NTV}
+\item \url{https://bit.ly/4dXQ72C}
+\item \url{https://dxfeed.com/}
+\item \url{https://finance.yahoo.com/quote/UNA.AS/}
+\item \url{https://it.finance.yahoo.com/quote/ULVR.L/}
+\item \url{https://wiseequities.com/pdffiles/arbitrage_-_jan_25_07.pdf}
+
+\end{itemize}
+
+\section{Bibliografia}
+
+\begin{itemize}
+
+\item W. M. P. van der Aalst, A. Weijters, L. Maruster (2004), 
+\textit{Workflow Mining: Discovering Process Models from Event Logs}, 
+IEEE Transactions on Knowledge and Data Engineering.
+
+\item W. M. P. van der Aalst, J. Carmona (2022), 
+\textit{Process Mining Handbook}, Springer. 
+\href{https://doi.org/10.1007/978-3-031-08848-3}{DOI: 10.1007/978-3-031-08848-3}
+:contentReference[oaicite:0]{index=0}
+
+\item W. M. P. van der Aalst (2016), 
+\textit{Process Mining: Data Science in Action}, Springer.
+
+\item IEEE Task Force on Process Mining (2012), 
+\textit{Process Mining Manifesto}.
+
+\item A. Burattin (2015), 
+\textit{Process Mining Techniques in Business Environments}.
+
+\item M. Dumas, M. La Rosa, J. Mendling, H. A. Reijers (2018), 
+\textit{Fundamentals of Business Process Management}, Springer.
+
+\item G. Cacciola, R. Conforti, H. Nguyen (2014), 
+\textit{Rabobank: A Process Mining Case Study – BPI Challenge 2014}.
+:contentReference[oaicite:1]{index=1}
+
+\item C. Di Francescomarino, 
+\textit{Clustering-Based Predictive Process Monitoring}.
+
+\item W. M. P. van der Aalst, 
+\textit{Time Prediction Based on Process Mining}.
+
+\item W. M. P. van der Aalst, 
+\textit{Object-Centric Process Mining: Dealing with Divergence and Convergence in Event Data}.
+
+\item W. M. P. van der Aalst, 
+\textit{Discovering Object-Centric Petri Nets}.
+
+\item M. Aquilina, E. Budish, P. O’Neill (2021), 
+\textit{Quantifying the High-Frequency Trading “Arms Race”}, BIS Working Paper No. 955.
+:contentReference[oaicite:2]{index=2}
+
+\end{itemize}
 
 \end{document}
