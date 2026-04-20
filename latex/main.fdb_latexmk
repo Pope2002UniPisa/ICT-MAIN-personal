@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1776674137.30298 "/Users/leonardopratelli/Desktop/ICT-MAIN-personal/Financial_Project_Performance_Analysis/latex/main.tex" "main.pdf" "main" 1776674137.99431 0
-  "/Users/leonardopratelli/Desktop/ICT-MAIN-personal/Financial_Project_Performance_Analysis/latex/main.tex" 1776674137.12581 15069 922d76d7fb06a6372f80bbd959bc16d2 ""
+["pdflatex"] 1776674202.38162 "/Users/leonardopratelli/Desktop/ICT-MAIN-personal/Financial_Project_Performance_Analysis/latex/main.tex" "main.pdf" "main" 1776674203.11281 0
+  "/Users/leonardopratelli/Desktop/ICT-MAIN-personal/Financial_Project_Performance_Analysis/latex/main.tex" 1776674202.2031 15070 303e61d48a17e159b3db9ae377509033 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc" 1136849721 2971 def0b6c1f0b107b3b936def894055589 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
@@ -121,9 +121,9 @@
   "/usr/local/texlive/2026/texmf.cnf" 1772409725 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
   "logoUnipi_black.png" 1773935660.74358 7174 73410bd3b84f73b073d1227487f5a2b0 ""
   "logosantanna.png" 1773935667.07575 71676 e915a7c68aac6e18a377611ac4a11d9b ""
-  "main.aux" 1776674137.93082 2602 b4d049ca639d86b75c337f9fa74ad4a2 "pdflatex"
-  "main.out" 1776674137.93139 3032 3ad603570c2180369b29df42acbd5a20 "pdflatex"
-  "main.tex" 1776674137.12581 15069 922d76d7fb06a6372f80bbd959bc16d2 ""
+  "main.aux" 1776674203.04836 2602 b4d049ca639d86b75c337f9fa74ad4a2 "pdflatex"
+  "main.out" 1776674203.04879 3032 3ad603570c2180369b29df42acbd5a20 "pdflatex"
+  "main.tex" 1776674202.2031 15070 303e61d48a17e159b3db9ae377509033 ""
   (generated)
   "main.aux"
   "main.log"
