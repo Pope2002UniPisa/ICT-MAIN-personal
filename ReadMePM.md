@@ -35,12 +35,7 @@
 Il punto di partenza per qualsiasi tecnica di process mining è sempre un event log (di seguito
 denominato semplicemente log). Tutte le tecniche di process mining assumono che sia possibile
 registrare eventi sequenzialmente in modo che ciascuno di questi si riferisca ad una determinata
-attività (ciò e ad un passo ben deﬁnito di un processo) e sia associato ad una particolare istanza
-di processo. Un’istanza di processo, o case, è una singola esecuzione del processo. Per esempio
-si consideri il processo di gestione di prestiti elargiti da un istituto di credito: ogni esecuzione
-del processo è intesa a gestire una richiesta di prestito. I log possono contenere anche ulteriori
-informazioni circa gli eventi. Di fatto, quando possibile le tecniche di process mining usano informazioni supplementari come le risorse (persone e dispositivi) che eseguono o che danno inizio ad
-un’attività, i timestamp o altri dati associati ad un evento (come la dimensione di un ordine).
+attività (ciò e ad un passo ben deﬁnito di un processo) e sia associato ad una particolare istanza di processo. Un’istanza di processo, o case, è una singola esecuzione del processo. Per esempio si consideri il processo di gestione di prestiti elargiti da un istituto di credito: ogni esecuzione del processo è intesa a gestire una richiesta di prestito. I log possono contenere anche ulteriori informazioni circa gli eventi. Di fatto, quando possibile le tecniche di process mining usano informazioni supplementari come le risorse (persone e dispositivi) che eseguono o che danno inizio ad un’attività, i timestamp o altri dati associati ad un evento (come la dimensione di un ordine).
 
 “Costruiamo un event log a partire da dati finanziari/operativi generati dal workflow di gestione del portafoglio. Su questo log applichiamo una logica di process discovery, con riferimento teorico all’algoritmo alpha, per ottenere un modello del processo interpretabile anche come rete di Petri. Disco viene usato come strumento di analisi visuale dei casi, delle varianti e delle performance.”
 
@@ -63,20 +58,7 @@ Output → Petri net / Disco
 - performance
 - poco “finance-oriented” reale
 
-# PROGETTO 5 — Object-Centric Process Mining (VERY ADVANCED)
-
-Esempio finance:
-Evento:
-"execute trade"
-Oggetti:
-cliente
-asset
-ordine
-Analisi:
-interazioni tra oggetti
-flussi complessi
-
-# PROGETTO 6 — Predictive Process Mining (TOP assoluto)
+# PROGETTO — Predictive Process Mining
 
 Domande:
 questo trade fallirà?
@@ -87,7 +69,7 @@ rischio operativo
 execution risk
 latency
 
-- Vorrei approfondire questi due come progetti. Sono sinceramente interessanti entrambi, tuttavia, diciamo che nel mondo della finanza lavorare su dati storici è sicuramente importante, ma lavorare in predizione è necessario. Questo mette in buona luce il progetto 6, anche se come l'hai descritto non mi convince, dal punto di vista tipo di quello che viene considerato, quindi rischio operativo, rischio di esecuzione, latency ecc... Non è possibile intrecciare i processi fatti nell'immediato passato, per ottenere una previsione di "andamento" nell'immediato futuro? Questo può essere interessante per l'intra-day che assorbe male le informazioni e che consente di "seguire le correnti" degli ordini di giornata. Magari a mercato chiuso si perde questo vantaggio competitivo rispetto al mercato, che assorbe le informazioni, le catalizza e non consente di prendere gli arbitraggi. Approfondiamoli entrambi, ti ho dato qualche spunto io. 
+- Non è possibile intrecciare i processi fatti nell'immediato passato, per ottenere una previsione di "andamento" nell'immediato futuro? Questo può essere interessante per l'intra-day che assorbe male le informazioni e che consente di "seguire le correnti" degli ordini di giornata. Magari a mercato chiuso si perde questo vantaggio competitivo rispetto al mercato, che assorbe le informazioni, le catalizza e non consente di prendere gli arbitraggi. Approfondiamoli entrambi, ti ho dato qualche spunto io. 
 - Vorrei in particolare "analizzare il sentiment" di società che hanno un dual listing o un triple listing, cioè il fatto che una società sia quotata su 2/3 piazze valori differenti ti consente di carpire al meglio se ci sono trend positivi/negativi/in conflitto tra loro, ad esempio se quotata su Londra e sta aumentando, quotata su amsterdam e sta aumentando compro velocemente, poi se a NY scende vendo subito per evitare perdite e così via, un movimento che sia veloce ed "automatico", cioè il processo analizza l'andamento, tipo su/giù e ci sono dei momenti, in quanto ci sono dei momenti della giornata che per diverse socetà dualistate o triplelistate i mercati sono contemporaneamente aperti e questo può portare un gran guadagno, tipo le azioni di Unilever PLC sono quotate a Londra, Amsterdam e NY, Londra apre alle 8 e chiude alle 16:30, amsterdam dalle 9 alle 17:30 e NY 15:30-22.:00, chiaramente ci sono delle fasce orario interessanti che consentono questo tipo di attività, ad esempio dalle 15:30 alle 16:30 ci sono tre piazze aperte contemporaneamente sulle stesso titolo. mentre in altre fasce orarie due.
 - Per prima cosa devi essere sicuro che i tre strumenti rappresentino davvero lo stesso sottostante economico. Nel caso Unilever, la base ufficiale è chiara: Unilever PLC è quotata a Londra e ad Amsterdam con lo stesso ISIN GB00BVZK7T90, e a New York è trattata come ADR; inoltre Unilever indica che ogni ADR rappresenta 1 azione ordinaria PLC. Quindi, per Unilever, Londra e Amsterdam sono direttamente confrontabili come stessa azione, e New York è confrontabile dopo aver tenuto conto del fatto che è un ADR 1:1 e della valuta USD.Questa è la regola generale che devi usare nel progetto: stesso issuer; stesso ISIN se possibile; se c’è un ADR, devi conoscere il rapporto ADR/azione; poi porti tutto nella stessa valuta e nella stessa unità economica.
 
