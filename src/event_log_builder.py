@@ -5,7 +5,10 @@ import sys
 from pathlib import Path
 
 import pandas as pd
-import pm4py
+import pm4py # process mining for python, libreria open source, sviuppata dall'Università di 
+# Aachen in Germania e serve a eseguire il process mining su log di eventi. 
+# pm4py supporta vari formati di log (CSV, XES, Parquet) e offre algoritmi di discovery (Inductive Miner, Heuristic Miner)
+# visualizzazione (DFG, process tree, BPMN) e esportazione (BPMN XML standard)
 
 
 # ===== COSTANTI DI PERCORSO =====
