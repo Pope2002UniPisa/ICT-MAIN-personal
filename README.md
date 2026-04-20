@@ -21,6 +21,30 @@
 - https://www.diag.uniroma1.it/deluca/automation/Automazione_RetiPetri.pdf     (pdf)
 - https://eprints.qut.edu.au/74865/1/bpiChallenge.pdf   (pdf)
 - https://connect2.euronext.com/en/data/client-specifications
+- https://www.bis.org/publ/work955.pdf      (pdf)
+- https://www.orafinanza.it/it/a-che-ora-apre-la-borsa-americana-orario-apertura-wall-street/
+- https://databento.com/docs/
+- https://realpython.com/ref/glossary/type-hint/#:~:text=In%20Python%2C%20a%20type%20hint,%2C%20arguments%2C%20and%20return%20values.
+- https://disi.unitn.it/~passerini/teaching/2020-2021/informatica/slides/32_pandas/pandas.html
+- https://www.degiro.it/trading-conoscenza/informazioni-sulle-borse/orari-apertura-borse
+- https://github.com/databento/databento-python
+- https://cris.fbk.eu/retrieve/814415f9-7fc6-4eb0-9ceb-af54f6699395/Clustering-Based%20Predictive%20Process%20Monitoring.pdf    (pdf)
+- https://iris.unitn.it/retrieve/329ea5a0-8688-40b2-a1c0-3a7eacb80da7/978-3-031-08848-3_10.pdf     (pdf)
+- https://www.vdaalst.com/publications/p609.pdf   (pdf)
+- https://www.vdaalst.com/publications/p1163.pdf   (pdf)
+- https://www.vdaalst.com/publications/p609.pdf    (pdf)
+- https://www.vdaalst.rwth-aachen.de/publications/p1056.pdf    (pdf)
+- https://datashop.cboe.com/cboe-us-equities-pitch
+- http://bit.ly/41JzBfb
+- https://data.nasdaq.com/databases/NTV
+- https://bit.ly/4dXQ72C
+- https://dxfeed.com/
+- https://finance.yahoo.com/quote/UNA.AS/
+- https://it.finance.yahoo.com/quote/ULVR.L/
+- https://wiseequities.com/pdffiles/arbitrage_-_jan_25_07.pdf   (pdf)
+- https://sourceforge.net/projects/promimport/
+- 
+- 
 
 
 
@@ -30,6 +54,12 @@
 - Process Mining Manifesto - IEEE Task Force on Process Mining
 - Reti di Petri: analisi, modellistica e controllo - Alessandro De Luca - Università Sapienza di Roma
 - Rabobank: A Process Mining Case Study: BPI Challenge 2014 Report - Queensland University of Technology, Australia
+- Clustering-Based Predictive Process Monitoring - Chiara Di Francescomarino
+- Predictive Process Monitoring - Chiara Di Francescomarino
+- Time Prediction Based on Process Mining - W. M. P. van der Aalst
+- Object-Centric Process Mining: Dealing With Divergence and Convergence in Event Data - W. M. P. van der Aalst
+- Discovering Object-Centric Petri Nets - W. M. P. van der Aalst
+- 
 
 # Definizioni varie
 Il punto di partenza per qualsiasi tecnica di process mining è sempre un event log (di seguito
